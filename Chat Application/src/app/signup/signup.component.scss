@@ -1,0 +1,19 @@
+textarea{
+    resize : none;
+}
+
+input.ng-invalid.ng-touched{
+    border : 1px red solid;
+}
+
+textarea.ng-invalid.ng-touched{
+    border : 1px red solid;
+}
+
+span.help-block{
+    color:red;
+}
+
+.container{
+    margin-top : 40px;
+}

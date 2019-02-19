@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <form  [formGroup]="loginForm" (ngSubmit) = "onSubmit()">
+            <!-- <span class="help-block" *ngIf="userNotFound">User does not exist with this email id or password.</span> -->
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" 
+                    class="form-control" 
+                    id="email" 
+                    placeholder="Enter email" 
+                    name="email"
+                    formControlName="email">
+              <span class="help-block" *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched">Please enter valid email-id</span>
+            </div>
+            <div class="form-group">
+              <label for="pwd">Password:</label>
+              <input type="password" 
+                    class="form-control" 
+                    id="pwd" 
+                    placeholder="Enter password" 
+                    name="pwd"
+                    formControlName="password">
+              <span class="help-block" *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">A minimum 5 characters are required</span>
+            </div>
+    
+            <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary">Submit</button>
+            
+            <div class = "alert alert-danger" style="margin-top: 20px" *ngIf="serverError">{{ serverError }}</div>
+            
+          </form>
+        </div>
+    <div class="col-md-3"></div>
+    </div>
+    </div>

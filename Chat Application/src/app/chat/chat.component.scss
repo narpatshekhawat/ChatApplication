@@ -1,0 +1,39 @@
+.container{
+    width : 50%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.content
+{
+  margin-top : 10px;
+  height:380px;
+  overflow:auto;
+  background : rgb(213, 243, 247);
+}
+
+.scrollbar-ripe-malinka::-webkit-scrollbar-track {
+  background-color: #F5F5F5;
+  border-radius: 10px; }
+  
+  .scrollbar-ripe-malinka::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5; }
+  
+  .scrollbar-ripe-malinka::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-image: -webkit-linear-gradient(330deg, #f093fb 0%, #f5576c 100%);
+  background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%); }
+
+  
+  .example-1 {
+  position: relative;
+  overflow-y: scroll;
+  height: 400px; 
+  }
+
+  .example-2 {
+      position: relative;
+      overflow-y: scroll;
+      height: 250px; 
+  }
+
+  

@@ -1,0 +1,261 @@
+
+<div class="container" *ngIf="roomIsSelected">
+  <div class="display-4 text-center" >Chat App</div>
+    <div class="content" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+        <div *ngFor="let c of chats">
+          <div class="row mt-2 mb-2" *ngIf="c.name != msgData.name && c.message.length != 0 && c.reply_message.length == 0">
+            <div class="col-md-1"></div>
+            <div class="col-md-6 border rounded " style="padding:10px;background:#33b9d173">
+              <div class="row">
+                  <div class="col-md-12"><h5 class="text-center">[{{c.name}}]</h5></div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12 pt-2 pb-2 text-center" style="word-wrap: break-word;font-size: 18px">{{c.message}}</div>
+              </div>
+              
+              <div class="row"  *ngIf="c.message != 'Join this room' && c.message != 'Left this room'">
+              <div class="col-md-6"><button type="button" class="btn btn-primary btn-block" (click)="likeMessage({'msg_id' : c._id,'user_name' : serverService.getUserPayload().username})">Like <span class="badge badge-light">{{c.likesCount}}</span></button></div><div class="col-md-6"><button class="btn btn-primary btn-block" (click)="reply(c.message,c.name)">Reply</button></div>
+              </div>
+            </div>
+            <div class="col-md-3"></div>
+              
+          </div>
+          <!-- when reply message is there  -->
+          <div class="row mt-2 mb-2" *ngIf="c.name != msgData.name && c.message.length != 0 && c.reply_message.length != 0">
+            <div class="col-md-1"></div>
+            <div class="col-md-6 border rounded " style="padding:10px;background:#33b9d173">
+              
+              <div class="row">
+                  <div class="col-md-12"><h5 class="text-center">[{{c.name}}]</h5></div>
+              </div>
+             
+              <div class="row border mr-1 ml-1 rounded" style="background:#C2F4EA">
+                <div class="col-md-12">
+                  <div class="row mt-1">
+                    <div class="col-md-12"><h6 class="text-center">{{c.reply_to}}</h6></div>
+                  </div>
+
+                  <div class="row" *ngIf="!c.isImage">
+                    <div class="col-md-12 pt-2 pb-2 text-center" style="word-wrap: break-word;font-size: 18px">{{c.message}}</div>
+                  </div>
+                  <div class="row" *ngIf="c.isImage">
+                    <div class="col-md-12 pt-2 pb-2 text-center" style="word-wrap: break-word;font-size: 18px">
+                      
+                      <img 
+                        src="data:image/png;base64,{{ c.message }}" 
+                        style="width : 100%;height:250px;" 
+                        class="img-responsive img-custom" 
+                        alt="img"
+                        >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                  <div class="col-md-12 pt-2 pb-2 text-center" style="word-wrap: break-word;font-size: 18px">{{c.reply_message}}</div>
+              </div>
+              
+              <div class="row"  *ngIf="c.message != 'Join this room' && c.message != 'Left this room'">
+              <div class="col-md-6"><button type="button" class="btn btn-primary btn-block" (click)="likeMessage({'msg_id' : c._id,'user_name' : serverService.getUserPayload().username})">Like <span class="badge badge-light">{{c.likesCount}}</span></button></div><div class="col-md-6"><button class="btn btn-primary btn-block" (click)="reply(c.reply_message,c.name)">Reply</button></div>
+              </div>
+            </div>
+            <div class="col-md-3"></div>
+              
+          </div>
+
+          <div class="row mt-2 mb-2" *ngIf="c.name != msgData.name  && c.message.length == 0">
+              <div class="col-md-1"></div>
+              <div class="col-md-6 border rounded" style="padding:10px;background:#33b9d173">
+                <div class="row">
+                    <div class="col-md-12"><h5 class="text-center">[{{c.name}}]</h5></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 pt-2 pb-2">
+                      <img 
+                      src="data:image/png;base64,{{ c.img.data }}" 
+                      style="width : 100%;height:250px;" 
+                      class="img-responsive img-custom" 
+                      alt="img"
+                      ></div>
+                </div>
+                <div class="row">
+                <div class="col-md-6"><button type="button" class="btn btn-primary btn-block" (click)="likeMessage({'msg_id' : c._id,'user_name' : serverService.getUserPayload().username})">Like <span class="badge badge-light">{{c.likesCount}}</span></button></div><div class="col-md-6"><button class="btn btn-primary btn-block" (click)="replyImg(c.img.data,c.name)">Reply</button></div>
+                </div>
+              </div>
+              <div class="col-md-3"></div>
+                
+            </div>
+            
+            <div class="row mt-2 mb-2" *ngIf="c.name == msgData.name  && c.message.length != 0 && c.reply_message.length == 0">
+                <div class="col-md-5"></div>
+                <div class="col-md-6 border rounded" style="padding:10px;background:#33b9d173">
+                  <div class="row">
+                      <div class="col-md-12"><h5 class="text-center">[{{c.name}}]</h5></div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12 pt-2 pb-2 text-center" style="word-wrap: break-word;font-size: 18px">{{c.message}}</div>
+                  </div>
+                  <div class="row">
+                  <div class="col-md-6"><button type="button" class="btn btn-primary btn-block" (click)="likeMessage({'msg_id' : c._id,'user_name' : serverService.getUserPayload().username})">Like <span class="badge badge-light">{{c.likesCount}}</span></button></div><div class="col-md-6"><button class="btn btn-primary btn-block" (click)="reply(c.message,c.name)">Reply</button></div>
+                  </div>
+                </div>
+                <div class="col-md-3"></div>
+                  
+            </div>
+
+            <!-- right side reply message is there -->
+
+            <div class="row mt-2 mb-2" *ngIf="c.name == msgData.name && c.message.length != 0 && c.reply_message.length != 0">
+                <div class="col-md-5"></div>
+                <div class="col-md-6 border rounded " style="padding:10px;background:#33b9d173">
+                  
+                  <div class="row">
+                      <div class="col-md-12"><h5 class="text-center">[{{c.name}}]</h5></div>
+                  </div>
+                 
+                  <div class="row border mr-1 ml-1 rounded" style="background:#C2F4EA">
+                    <div class="col-md-12">
+                      <div class="row mt-1">
+                        <div class="col-md-12"><h6 class="text-center">{{c.reply_to}}</h6></div>
+                      </div>
+    
+                      <div class="row" *ngIf="!c.isImage">
+                        <div class="col-md-12 pt-2 pb-2 text-center" style="word-wrap: break-word;font-size: 18px">{{c.message}}</div>
+                      </div>
+                      <div class="row" *ngIf="c.isImage">
+                        <div class="col-md-12 pt-2 pb-2 text-center" style="word-wrap: break-word;font-size: 18px">
+                          
+                          <img 
+                            src="data:image/png;base64,{{ c.message }}" 
+                            style="width : 100%;height:250px;" 
+                            class="img-responsive img-custom" 
+                            alt="img"
+                            >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                      <div class="col-md-12 pt-2 pb-2 text-center" style="word-wrap: break-word;font-size: 18px">{{c.reply_message}}</div>
+                  </div>
+                  
+                  <div class="row"  *ngIf="c.message != 'Join this room' && c.message != 'Left this room'">
+                  <div class="col-md-6"><button type="button" class="btn btn-primary btn-block" (click)="likeMessage({'msg_id' : c._id,'user_name' : serverService.getUserPayload().username})">Like <span class="badge badge-light">{{c.likesCount}}</span></button></div><div class="col-md-6"><button class="btn btn-primary btn-block" (click)="reply(c.reply_message,c.name)">Reply</button></div>
+                  </div>
+                </div>
+                <div class="col-md-1"></div>
+                  
+              </div>
+                <!-- right side reply message is finish here -->
+            <div class="row mt-2 mb-2" *ngIf="c.name == msgData.name  && c.message.length == 0">
+                <div class="col-md-5"></div>
+                <div class="col-md-6 border rounded" style="padding:10px;background:#33b9d173">
+                  <div class="row">
+                      <div class="col-md-12"><h5 class="text-center">[{{c.name}}]</h5></div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12 pt-2 pb-2">
+                        <img 
+                        src="data:image/png;base64,{{ c.img.data }}" 
+                        style="width : 100%;height:250px;" 
+                        class="img-responsive img-custom" 
+                        alt="img"
+                        ></div>
+                  </div>
+                  <div class="row">
+      
+                  <div class="col-md-6"><button type="button" class="btn btn-primary btn-block" (click)="likeMessage({'msg_id' : c._id,'user_name' : serverService.getUserPayload().username})">Like <span class="badge badge-light">{{c.likesCount}}</span></button></div><div class="col-md-6"><button class="btn btn-primary btn-block" (click)="replyImg(c.img.data,c.name)">Reply</button></div>
+                  </div>
+                </div>
+                <div class="col-md-3"></div>
+                  
+              </div>
+             
+        </div>
+    </div>
+    <div class="row" *ngIf="isReplySelected">
+      <div class="col-md-9">
+        <span class="form-control" style="word-break: break-word;background-color:#F5D5CE">{{msgData.message}}</span>     
+      </div>
+      <div class="col-md-3">  
+      </div>
+    </div>
+
+    <div class="row" *ngIf="isImgReplySelected">
+      <div class="col-md-9">
+        <span class="form-control pl-5 pr-5 text-center" style="word-break: break-word;background-color:#F5D5CE">
+          
+          <img 
+          src="data:image/png;base64,{{ msgData.message }}" 
+          style="width : 50%;height:100px;" 
+          class="img-responsive img-custom" 
+          alt="img"
+          >
+        </span>     
+      </div>
+      <div class="col-md-3">  
+      </div>
+    </div>
+
+    <div class="row" *ngIf="isReplySelected">
+      <div class="col-md-9">
+          <input type="text" [(ngModel)]="msgData.reply_message" (keydown.enter)="sendMsg();false;" class="mb-3 form-control">        
+      </div>
+      <div class="col-md-3">
+          <input type="button" value="Send" class="mb-3 form-control btn btn-primary" (click) = "sendMsg()">
+      </div>
+    </div>
+    <div class="row" *ngIf="isImgReplySelected">
+      <div class="col-md-9">
+          <input type="text" [(ngModel)]="msgData.reply_message" (keydown.enter)="sendMsg();false;" class="mb-3 form-control">        
+      </div>
+      <div class="col-md-3">
+          <input type="button" value="Send" class="mb-3 form-control btn btn-primary" (click) = "sendMsg()">
+      </div>
+    </div>
+    <div class="row" *ngIf="!isReplySelected && !isImgReplySelected">
+      <div class="col-md-9">
+          <input type="text" [(ngModel)]="msgData.message" (keydown.enter)="sendMsg();false;" class="mb-3 form-control">        
+      </div>
+      <div class="col-md-3">
+          <input type="button" value="Send" class="mb-3 form-control btn btn-primary" (click) = "sendMsg()">
+      </div>
+    </div>
+    <div class="form-group">
+        <label for="pimage">Send Image</label>
+        <input #myInput type="file" accept="image/*" class="form-control-file" ng2FileSelect [uploader]="uploader" />  
+    </div>
+    <input type="button" value="Upload" class="mt-2 btn btn-primary" (click)="uploader.uploadAll()" (click)="reset()"  [disabled]="!uploader.getNotUploadedItems().length">  
+    <input type="button" value="Exit Room" class="mt-2 ml-2 btn btn-primary" (click) = "exitRoom()">    
+  </div>
+
+
+<div class="container" *ngIf="!roomIsSelected">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="text-center mt-5 display-4">Select Room</div>
+        <div class="mt-5 card example-2 scrollbar-ripe-malinka" style="background:cornsilk">
+        
+            <ul class="list-group">
+                <li class="text-center list-group-item mt-1 mb-1 ml-1 mr-1" (click) = "joinRoom(t)" *ngFor="let t of room">
+                    {{ t }}
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 mt-3">
+      <!-- Enter Name : <input type="text" class="form-control mt-2" [(ngModel)] = "name" /> -->
+      <input type="button" value="Logout" class="mb-3 mt-5 form-control btn btn-primary" (click) = "logout()"/>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
